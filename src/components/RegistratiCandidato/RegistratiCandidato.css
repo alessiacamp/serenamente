@@ -1,0 +1,76 @@
+.registrazione {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #d1f2eb;
+}
+
+form {
+  background-color: white; /* Sfondo bianco per il form */
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  margin-bottom: 20px;
+  color: black; /* Testo nero */
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  width: 75%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #000; /* Linea inferiore nera */
+  background-color: transparent;
+  color: black; /* Testo nero */
+  outline: none;
+}
+
+.input-box input::placeholder {
+  color: rgba(0, 0, 0, 0.7); /* Placeholder semi-trasparente */
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  color: black; /* Testo nero */
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  text-decoration: underline; /* Sottolineatura al passaggio del mouse */
+}
+
+p {
+  margin-top: 15px;
+  color: black; /* Testo nero */
+}
+
+a {
+  color: black; /* Testo nero per i link */
+  text-decoration: underline; /* Sottolineatura */
+}
+
+a:hover {
+  text-decoration: none; /* Rimuove la sottolineatura al passaggio del mouse */
+}
+
+.icona {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black; /* Icone nere */
+}

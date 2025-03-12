@@ -1,0 +1,47 @@
+.titleFont {
+  font-family: "Tangerine", cursive;
+  font-size: 120px;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.subtitleFont {
+  font-family: "Tangerine", cursive;
+  font-size: 70px;
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Cambia il background del modale */
+.custom-modal .modal-content {
+  background-color: white !important; /* Se vuoi un altro colore, cambia qui */
+}
+
+.custom-shape-divider-bottom-1741786601 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  transform: rotate(180deg);
+}
+
+.custom-shape-divider-bottom-1741786601 svg {
+  position: relative;
+  display: block;
+  width: calc(185% + 1.3px);
+  height: 313px;
+}
+
+.custom-shape-divider-bottom-1741786601 .shape-fill {
+  fill: #ffffff;
+}
+
+/** For mobile devices **/
+@media (max-width: 767px) {
+  .custom-shape-divider-bottom-1741786601 svg {
+    width: calc(300% + 1.3px);
+    height: 333px;
+  }
+}

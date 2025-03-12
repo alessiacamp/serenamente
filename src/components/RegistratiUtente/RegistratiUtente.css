@@ -1,0 +1,28 @@
+.scheda {
+  flex-direction: column;
+  text-align: center;
+}
+
+.icona {
+  color: white;
+  justify-content: center;
+  font-size: xx-large;
+}
+
+.scheda button {
+  width: 40%;
+  height: 30px;
+  border: none;
+  border-radius: 40px;
+  color: white;
+  background: #dabcf3;
+}
+
+.link-registrazione a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+input::placeholder {
+  color: white !important;
+}
