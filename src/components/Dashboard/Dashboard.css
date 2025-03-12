@@ -1,47 +1,80 @@
-.titleFont {
-  font-family: "Tangerine", cursive;
-  font-size: 120px;
-  font-weight: 700;
-  font-style: normal;
+.navbar-collapse {
+  padding: 10px;
 }
 
-.subtitleFont {
-  font-family: "Tangerine", cursive;
-  font-size: 70px;
-  font-weight: 700;
-  font-style: normal;
+/* Stili per il modal di benvenuto */
+.custom-welcome-modal .modal-content {
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-/* Cambia il background del modale */
-.custom-modal .modal-content {
-  background-color: white !important; /* Se vuoi un altro colore, cambia qui */
+.custom-welcome-modal .modal-header {
+  border-bottom: none;
 }
 
-.custom-shape-divider-bottom-1741786601 {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-  transform: rotate(180deg);
+.custom-welcome-modal .modal-body {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  padding: 20px;
 }
 
-.custom-shape-divider-bottom-1741786601 svg {
-  position: relative;
-  display: block;
-  width: calc(185% + 1.3px);
-  height: 313px;
+.custom-dropdown-item:active,
+.custom-dropdown-item:focus {
+  background-color: transparent !important;
+  color: #603311 !important;
+  outline: none !important;
 }
 
-.custom-shape-divider-bottom-1741786601 .shape-fill {
-  fill: #ffffff;
+.custom-welcome-modal .modal-footer {
+  border-top: none;
+  justify-content: center;
+  background-color: #f8f9fa;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
-/** For mobile devices **/
-@media (max-width: 767px) {
-  .custom-shape-divider-bottom-1741786601 svg {
-    width: calc(300% + 1.3px);
-    height: 333px;
+/* Stili per il carosello */
+.my-card-slider .card-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.fade-in {
+  opacity: 1;
+  transition: opacity 0;
+}
+
+.btn-primary {
+  width: auto;
+  margin-top: inherit;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .custom-button {
+    margin-bottom: 30px;
+  }
+
+  .modal-title-custom {
+    font-size: 1.5rem;
+    flex-direction: column;
+    gap: 4px;
   }
 }

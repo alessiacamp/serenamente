@@ -1,3 +1,11 @@
+.registrazione {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #d1f2eb;
+}
+
 .scheda {
   flex-direction: column;
   text-align: center;
@@ -24,5 +32,11 @@
 }
 
 input::placeholder {
-  color: white !important;
+  color: black !important;
+}
+
+.rounded-circle {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
 }
