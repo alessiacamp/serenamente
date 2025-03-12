@@ -1,18 +1,47 @@
 import React from 'react';
-import { Card, Form, Button } from 'react-bootstrap';
 import './RegistratiUtente.css';
 import { FaUser } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
+import { FaUserAlt } from "react-icons/fa";
+
 
 const RegistratiUtente = () => {
   return (
-    <div className="login text-align-center" style={{ color: 'black' }}> {/* Testo nero per tutto il contenuto */}
+    <div className="registrazione text-align-center" style={{ color: 'black' }}> 
       <form action style={{ textAlign: 'center' }}>
-        <FaUser style={{ color: 'black', marginBottom: '10px' }} /> {/* Icona nera */}
-        <h2 style={{ color: 'black' }}>Registrati come Utente</h2> {/* Titolo nero */}
-        
-        {/* Campo Email */}
+        <h2 style={{ color: 'black' }}>Registrati come Utente</h2> 
+        <img
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdyUSIyK9p6BATvVhdZc4sxw5MbzUxNEv70g&s"
+                  className="d-inline w-70 h-70 rounded-circle" 
+                  alt="..."
+                />
+      
+        <div className='input-box'>
+          <input
+            type="text"
+            placeholder='Nome'
+            required
+            style={{ color: 'black' }} 
+            
+          />
+          <FaUserAlt className='icona' style={{ color: 'black' }}/>
+
+        </div>
+
+       
+
+        <div className='input-box'>
+          <input
+            type="text"
+            placeholder='Cognome'
+            required
+            style={{ color: 'black' }} 
+          />
+          <FaUserAlt className='icona' style={{ color: 'black' }} />
+
+        </div>
+
         <div className='input-box'>
           <input
             type="text"
@@ -23,8 +52,8 @@ const RegistratiUtente = () => {
           <MdOutlineEmail className='icona' style={{ color: 'black' }} /> {/* Icona nera */}
         </div>
 
-        {/* Campo Password */}
-        <div className='input-box'>
+        
+         <div className='input-box'>
           <input
             type="password" 
             placeholder='Password'
@@ -34,7 +63,7 @@ const RegistratiUtente = () => {
           <TbLockPassword className='icona' style={{ color: 'black' }} /> {/* Icona nera */}
         </div>
 
-        {/* Bottone di Accesso */}
+       
         <button type='submit' style={{ color: 'black', background: 'none', border: 'none', cursor: 'pointer' }}>
           Registrati
         </button>

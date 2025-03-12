@@ -4,6 +4,7 @@ import RegistratiUtente from "./components/RegistratiUtente/RegistratiUtente";
 import RegistratiCandidato from "./components/RegistratiCandidato/RegistratiCandidato";
 import Dashboard from "./components/Dashboard/Dashboard";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ModificaProfilo from "./ModificaProfilo/ModificaProfilo";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/registrati-utente" element={<RegistratiUtente />} />
         <Route path="/registrati-volontario" element={<RegistratiCandidato />} />
         <Route path="/home" element={<Dashboard />} />
+        <Route path="/modifica-profilo" element={<ModificaProfilo />} />
 
         <Route path="/" element={<Dashboard />} />
       </Routes>

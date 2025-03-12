@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Dropdown, ButtonGroup, Carousel, Card, Navbar, Container, Nav, NavDropdown } from "react-bootstrap";
+import { Dropdown,  Container, Nav } from "react-bootstrap";
 import "./Dashboard.css";
-import { Button, Modal } from "react-bootstrap";
+import { Modal } from "react-bootstrap";
+import { Carousel, Row, Col } from 'react-bootstrap';
 
 const Dashboard = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [modalType, setModalType] = useState(null);
 
   const handleShow = (type) => setModalType(type);
@@ -74,50 +74,50 @@ const Dashboard = () => {
               </div>
             </div>
 
-            {/* Carousel */}
-            <div className="d-flex justify-content-center align-items-center vh-100">
-              <Carousel
-                className="custom-carousel"
-                indicators={false}
-                style={{
-                  width: '300px',
-                  boxShadow: '0px 4px 15px rgba(148, 0, 211, 0.3)',
-                  borderRadius: '15px',
-                  overflow: 'hidden',
-                }}
-              >
-                <Carousel.Item>
-                  <Card className="custom-card text-center" style={{ backgroundColor: 'white', borderRadius: '15px', padding: '20px' }}>
-                    <Card.Img variant="top" src="https://www.veterinari.it/templates/yootheme/cache/2f/europeo-2fa60074.jpeg" className="rounded-circle mx-auto mt-3" />
-                    <Card.Body>
-                      <Card.Title className="text-primary fw-bold">Mario Rossi</Card.Title>
-                      <Card.Text className="text-dark">Psicologo e terapeuta con esperienza.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Carousel.Item>
+            <div className="col-12">
+      <Carousel id="carouselExample">
+        {/* Primo Slide */}
+        <Carousel.Item>
+          <Container fluid>
+            <Row>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media0.webp" className="d-inline w-100" alt="..." />
+              </Col>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media1.jpg" className="d-inline w-100" alt="..." />
+              </Col>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media2.webp" className="d-inline w-100" alt="..." />
+              </Col>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media3.webp" className="d-inline w-100" alt="..." />
+              </Col>
+            </Row>
+          </Container>
+        </Carousel.Item>
 
-                <Carousel.Item>
-                  <Card className="custom-card text-center" style={{ backgroundColor: 'white', borderRadius: '15px', padding: '20px' }}>
-                    <Card.Img variant="top" src="https://www.veterinari.it/templates/yootheme/cache/2f/europeo-2fa60074.jpeg" className="rounded-circle mx-auto mt-3" />
-                    <Card.Body>
-                      <Card.Title className="text-primary fw-bold">Giulia Bianchi</Card.Title>
-                      <Card.Text className="text-dark">Consulente specializzata in benessere emotivo.</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Carousel.Item>
-
-                <Carousel.Item>
-                  <Card className="custom-card text-center" style={{ backgroundColor: 'white', borderRadius: '15px', padding: '20px' }}>
-                    <Card.Img variant="top" src="https://www.veterinari.it/templates/yootheme/cache/2f/europeo-2fa60074.jpeg" className="rounded-circle mx-auto mt-3" />
-                    <Card.Body>
-                      <Card.Title className="text-primary fw-bold">Gatto</Card.Title>
-                      <Card.Text className="text-dark">Miao miao miao</Card.Text>
-                    </Card.Body>
-                  </Card>
-                </Carousel.Item>
-              </Carousel>
-            </div>
-          </div>
+        {/* Secondo Slide */}
+        <Carousel.Item>
+          <Container fluid>
+            <Row>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media4.jpg" className="d-inline w-100" alt="..." />
+              </Col>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media5.webp" className="d-inline w-100" alt="..." />
+              </Col>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media6.jpg" className="d-inline w-100" alt="..." />
+              </Col>
+              <Col xs={3} className="p-1">
+                <img src="Netflix-assets/Netflix-assets/assets/media/media7.webp" className="d-inline w-100" alt="..." />
+              </Col>
+            </Row>
+          </Container>
+        </Carousel.Item>
+      </Carousel>
+    </div>
+    </div>
 
           {/* SVG Divider */}
           <div className="custom-shape-divider-bottom-1741786601">

@@ -1,4 +1,4 @@
-.login {
+.registrazione {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,11 +7,12 @@
 }
 
 form {
-  background-color: black;
+  background-color: white;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
+  width: 100%;
+  max-width: 400px;
 }
 
 h2 {
@@ -25,9 +26,8 @@ h2 {
 }
 
 .input-box input {
-  width: 100%;
+  width: 75%;
   padding: 10px;
-  padding-left: 40px;
   border: none;
   border-bottom: 1px solid #000;
   background-color: transparent;
@@ -37,14 +37,6 @@ h2 {
 
 .input-box input::placeholder {
   color: rgba(0, 0, 0, 0.7);
-}
-
-.icona {
-  position: absolute;
-  left: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: black;
 }
 
 button {
@@ -73,4 +65,19 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+.icona {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: black;
+}
+
+/* App.css */
+.rounded-circle {
+  width: 200px; /* Larghezza personalizzata */
+  height: 200px; /* Altezza personalizzata */
+  object-fit: cover; /* Adatta l'immagine al cerchio */
 }

@@ -1,19 +1,19 @@
 import React from 'react';
-import './RegistratiCandidato.css';
+import './ModificaProfilo.css';
 import { FaUser } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { FaUserAlt } from "react-icons/fa";
 
 
-const RegistratiVolontario = () => {
+const ModificaProfilo = () => {
   return (
     <div className="registrazione text-align-center" style={{ color: 'black' }}> 
       <form action style={{ textAlign: 'center' }}>
-        <h2 style={{ color: 'black' }}>Registrati come Volontario</h2> 
+        <h2 style={{ color: 'black' }}>Modifica Profilo</h2> 
         <img
                   src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdyUSIyK9p6BATvVhdZc4sxw5MbzUxNEv70g&s"
-                  className="d-inline w-70 h-70 rounded-circle" 
+                  className="d-inline w-70 h-70 rounded-circle" // Immagine rotonda
                   alt="..."
                 />
         <div className='input-box'>
@@ -72,4 +72,4 @@ const RegistratiVolontario = () => {
   );
 };
 
-export default RegistratiVolontario;
+export default ModificaProfilo;
