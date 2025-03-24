@@ -1,0 +1,69 @@
+.registrazione {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+form {
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+.input-box {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-box input {
+  width: 75%;
+  padding: 10px;
+  border: none;
+  border-bottom: 1px solid #000;
+  background-color: transparent;
+  color: black;
+  outline: none;
+}
+
+.input-box input::placeholder {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+p {
+  margin-top: 15px;
+}
+
+a {
+  text-decoration: underline;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.icona {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}

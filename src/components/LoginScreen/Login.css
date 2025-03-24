@@ -1,5 +1,6 @@
 .login {
   height: 100vh;
+  background-color: #d1f2eb;
 }
 
 form {
@@ -22,7 +23,9 @@ h2 {
   width: 100%;
   padding: 10px;
   padding-left: 40px;
+  padding-left: 40px;
   border: none;
+  border-bottom: 1px solid #000;
   border-bottom: 1px solid #000;
   background-color: transparent;
   outline: none;
