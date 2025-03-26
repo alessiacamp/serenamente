@@ -2,38 +2,6 @@
   padding: 10px;
 }
 
-/* Stili per il modal di benvenuto */
-.custom-welcome-modal .modal-content {
-  border-radius: 16px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-.custom-welcome-modal .modal-header {
-  border-bottom: none;
-}
-
-.custom-welcome-modal .modal-body {
-  font-size: 1.1rem;
-  line-height: 1.6;
-  padding: 20px;
-}
-
-.custom-dropdown-item:active,
-.custom-dropdown-item:focus {
-  background-color: transparent !important;
-  color: #603311 !important;
-  outline: none !important;
-}
-
-.custom-welcome-modal .modal-footer {
-  border-top: none;
-  justify-content: center;
-  background-color: #f8f9fa;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
-
-/* Stili per il carosello */
 .my-card-slider .card-image {
   width: 150px;
   height: 150px;

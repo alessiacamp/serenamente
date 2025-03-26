@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Dropdown, Container, Nav, Navbar, Row, Col, Card, Button, Modal } from "react-bootstrap";
-import { FaArrowLeft, FaArrowRight, FaInstagram, FaFacebook, FaTwitter, FaYoutube, FaHandsHelping, FaEnvelopeOpenText, FaEnvelope, FaComments } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaInstagram, FaFacebook, FaTwitter, FaYoutube, FaHandsHelping, FaEnvelopeOpenText, FaEnvelope, FaComments, FaTimes } from "react-icons/fa";
 import "./Dashboard.css";
 import immagineBullismo from "./images/bullismo.jpg";
 import immagineDepressione from "./images/depression.jpeg";
@@ -9,7 +9,6 @@ import immagineDisturbiAlimentari from "./images/eatingDisorder.png";
 import immagineSaluteMentale from "./images/salute-mentale.jpg";
 import immagineViolenzaCoppia from "./images/violenza.jpg";
 import selfCare from "./images/abbraccio.jpg";
-
 
 const modals = {
   telefonoAmico: { title: "Telefono Amico", body: "Numero di telefono : 02 2327 2327" },
@@ -64,11 +63,64 @@ const articlesData = [
   },
 ];
 
+const volontariData = [
+  {
+    id: 1,
+    image: "",
+    nome: "Dante",
+    cognome: "Rossi",
+    email: "dante.rossi@example.com",
+    messaggio: "Credo che ascoltare sia il primo passo per aiutare qualcuno. Sono qui per offrirti uno spazio sicuro dove poterti esprimere liberamente."
+  },
+  {
+    id: 2,
+    image: "",
+    nome: "Francesco",
+    cognome: "Bianchi",
+    email: "francesco.bianchi@example.com",
+    messaggio: "Ho scelto di diventare volontario perché so quanto possa essere difficile affrontare certe situazioni da soli. Parlarne è già un primo passo importante."
+  },
+  {
+    id: 3,
+    image: "",
+    nome: "Gianmarco",
+    cognome: "Verdi",
+    email: "gianmarco.verdi@example.com",
+    messaggio: "La mia esperienza personale mi ha insegnato che a volte basta una persona che ti ascolti davvero per fare la differenza."
+  },
+  {
+    id: 4,
+    image: "",
+    nome: "Mirko",
+    cognome: "Neri",
+    email: "mirko.neri@example.com",
+    messaggio: "Non esistono problemi troppo piccoli o troppo grandi per essere condivisi. Sono qui per ascoltarti senza giudizio."
+  },
+  {
+    id: 5,
+    image: "",
+    nome: "Simone",
+    cognome: "Gialli",
+    email: "simone.gialli@example.com",
+    messaggio: "La mia missione è aiutare le persone a trovare la forza dentro di sé per superare le difficoltà."
+  },
+  {
+    id: 6,
+    image: "",
+    nome: "Stefano",
+    cognome: "Blu",
+    email: "stefano.blu@example.com",
+    messaggio: "Credo che ogni persona abbia il diritto di essere ascoltata e compresa. Offro il mio tempo per darti questo spazio."
+  },
+];
+
 const Dashboard = () => {
   const [modalType, setModalType] = useState(null);
   const [clickedCards, setClickedCards] = useState([]);
   const [showWelcomeModal, setShowWelcomeModal] = useState(true);
   const [navbarColor] = useState("#603311");
+  const [selectedVolontario, setSelectedVolontario] = useState(null);
+  const [currentCard, setCurrentCard] = useState(0);
 
   const handleShow = (type) => setModalType(type);
   const handleClose = () => setModalType(null);
@@ -79,24 +131,13 @@ const Dashboard = () => {
     }
   };
 
-
-
-  const CardSlider = () => {
-    const [currentCard, setCurrentCard] = useState(0);
+  const CardSlider = ({ currentCard, setCurrentCard, setSelectedVolontario }) => {
     const [fade, setFade] = useState(false);
-    const [cards] = useState([
-      { id: 1, image: "https://www.powned.it/wp-content/uploads/2023/05/Immagine-2023-05-03-120801.jpg", title: "Dante", link: "https://example.com/card1" },
-      { id: 2, image: "https://images.squarespace-cdn.com/content/v1/65c9f92dbcea263ed06a6b1b/0f63b715-ac88-491e-9078-d6ed18f2a2d6/MARZA.jpg?format=1000w", title: "Francesco", link: "https://example.com/card2" },
-      { id: 3, image: "https://gamelegends.it/wp-content/uploads/image.hynerd.it/uploads/2023/07/Tumblurr.webp", title: "Gianmarco", link: "https://example.com/card3" },
-      { id: 4, image: "https://wips.plug.it/cips/libero.it/magazine/cms/2024/05/cg.jpg?w=545&h=343&a=c", title: "Mirko", link: "https://example.com/card4" },
-      { id: 5, image: "https://images.everyeye.it/img-notizie/jok3r-fratello-cicciogamer89-bannato-twitch-non-partner-v4-619696-1280x960.webp", title: "Simone", link: "https://example.com/card5" },
-      { id: 6, image: "https://www.officine-25.it/wp-content/uploads/2023/02/stefano-lepri-influencer.jpg", title: "Stefano", link: "https://example.com/card6" },
-    ]);
 
     const nextCard = () => {
       setFade(true);
       setTimeout(() => {
-        setCurrentCard((prev) => (prev + 1) % cards.length);
+        setCurrentCard((prev) => (prev + 1) % volontariData.length);
         setFade(false);
       }, 300);
     };
@@ -104,9 +145,13 @@ const Dashboard = () => {
     const prevCard = () => {
       setFade(true);
       setTimeout(() => {
-        setCurrentCard((prev) => (prev - 1 + cards.length) % cards.length);
+        setCurrentCard((prev) => (prev - 1 + volontariData.length) % volontariData.length);
         setFade(false);
       }, 300);
+    };
+
+    const openVolontarioModal = () => {
+      setSelectedVolontario(volontariData[currentCard]);
     };
 
     return (
@@ -127,24 +172,29 @@ const Dashboard = () => {
           <Col xs={8} md={6}>
             <Row className="justify-content-center">
               <div className={`card-group ${fade ? "fade-out" : "fade-in"}`} style={{ fontFamily: "Tinos", fontSize: "4rem" }}>
-                <Col key={cards[currentCard].id} xs={12} className="mb-3">
+                <Col key={volontariData[currentCard].id} xs={12} className="mb-3">
                   <div className="d-flex flex-column align-items-center justify-content-center text-center">
-                    <a href={cards[currentCard].link} target="_blank" rel="noopener noreferrer">
+                    <Button
+                      variant="link"
+                      onClick={openVolontarioModal}
+                      style={{ padding: 0, border: 'none', background: 'none' }}
+                    >
                       <img
-                        src={cards[currentCard].image}
+                        src={volontariData[currentCard].image}
                         alt=""
-                        className="img-fluid rounded-circle"
+                        className="img-fluid rounded-circle card-image"
                         style={{
                           width: "250px",
                           height: "250px",
                           objectFit: "cover",
                           border: "4px solid #603311",
                           boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+                          cursor: "pointer"
                         }}
                       />
-                    </a>
+                    </Button>
                     <h5 style={{ fontSize: "1.5rem", marginTop: "25px", color: "#603311" }}>
-                      {cards[currentCard].title}
+                      {volontariData[currentCard].nome}
                     </h5>
                   </div>
                 </Col>
@@ -163,23 +213,24 @@ const Dashboard = () => {
 
   return (
     <div className="container-fluid d-flex flex-column min-vh-100 p-0">
-
       <Navbar expand="lg" className="fixed-top " style={{ backgroundColor: "#603311", zIndex: 1000, transition: "background-color 0.3s ease" }}>
         <Container fluid>
           <Navbar.Toggle aria-controls="navbar-nav" style={{ borderColor: "#603311", color: "#603311", paddingTop: "10px" }} />
-          <Navbar.Collapse id="navbar-nav" className="navbar-collapse-custom">
+          <Navbar.Collapse id="navbar-nav" className="navbar-collapse-custom" style={{ padding: "10px" }}>
             <Nav className="me-auto">
               <Dropdown>
-                <Dropdown.Toggle
-                  variant="outline-light"
-                  id="dropdownMenuButton1"
-                  style={{
-                    backgroundColor: "#DEB887",
-                    borderColor: "#603311",
-                    color: "#603311",
-                    fontFamily: "Tinos",
-                  }}
-                >
+                <Dropdown.Toggle style={{
+                  backgroundColor: "#DEB887",
+                  borderColor: "#603311",
+                  color: "#603311",
+                  fontFamily: "Tinos",
+                  borderRadius: "5px",
+                  padding: "0.5rem 1rem",
+                  width: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center"
+                }}>
                   Chiedi Aiuto
                 </Dropdown.Toggle>
                 <Dropdown.Menu
@@ -192,35 +243,55 @@ const Dashboard = () => {
                 >
                   <Dropdown.Item
                     className="custom-dropdown-item"
-                    style={{ color: "#603311" }}
+                    style={{
+                      color: "#603311",
+                      backgroundColor: "transparent",
+                      transition: "none",
+                    }}
                     onClick={() => handleShow("telefonoAmico")}
                   >
                     Telefono Amico
                   </Dropdown.Item>
                   <Dropdown.Item
                     className="custom-dropdown-item"
-                    style={{ color: "#603311" }}
+                    style={{
+                      color: "#603311",
+                      backgroundColor: "transparent",
+                      transition: "none",
+                    }}
                     onClick={() => handleShow("antiviolenza")}
                   >
                     Antiviolenza e Stalking
                   </Dropdown.Item>
                   <Dropdown.Item
                     className="custom-dropdown-item"
-                    style={{ color: "#603311" }}
+                    style={{
+                      color: "#603311",
+                      backgroundColor: "transparent",
+                      transition: "none",
+                    }}
                     onClick={() => handleShow("disturbiAlimentari")}
                   >
                     Disturbi Alimentari
                   </Dropdown.Item>
                   <Dropdown.Item
                     className="custom-dropdown-item"
-                    style={{ color: "#603311" }}
+                    style={{
+                      color: "#603311",
+                      backgroundColor: "transparent",
+                      transition: "none",
+                    }}
                     onClick={() => handleShow("suicidio")}
                   >
                     Prevenzione del Suicidio
                   </Dropdown.Item>
                   <Dropdown.Item
                     className="custom-dropdown-item"
-                    style={{ color: "#603311" }}
+                    style={{
+                      color: "#603311",
+                      backgroundColor: "transparent",
+                      transition: "none",
+                    }}
                     onClick={() => handleShow("dipendenzaDroghe")}
                   >
                     Dipendenze
@@ -238,6 +309,12 @@ const Dashboard = () => {
                     borderColor: "#603311",
                     color: "#603311",
                     fontFamily: "Tinos",
+                    borderRadius: "5px",
+                    padding: "0.5rem 1rem",
+                    width: "100%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center"
                   }}
                 >
                   Profilo
@@ -250,10 +327,19 @@ const Dashboard = () => {
                     fontFamily: "Tinos",
                   }}
                 >
-                  <Dropdown.Item style={{ color: "#603311" }} href="#">
+                  <Dropdown.Item style={{
+                    color: "#603311",
+                    backgroundColor: "transparent",
+                    alignItems: "center",
+                    transition: "none",
+                  }} href="/modifica-profilo">
                     Modifica Profilo
                   </Dropdown.Item>
-                  <Dropdown.Item style={{ color: "#603311" }} href="#">
+                  <Dropdown.Item style={{
+                    color: "#603311",
+                    backgroundColor: "transparent",
+                    transition: "none",
+                  }} href="/login">
                     Logout
                   </Dropdown.Item>
                 </Dropdown.Menu>
@@ -309,7 +395,6 @@ const Dashboard = () => {
           <Container>
             <Row className="justify-content-center">
               <Col xs={12} md={10}>
-
                 <Card style={{ backgroundColor: "#DEB887", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", padding: "20px" }}>
                   <Card.Body>
                     <Row className="align-items-center">
@@ -321,7 +406,7 @@ const Dashboard = () => {
                           Chi sono i nostri volontari?
                         </Card.Title>
                         <Card.Text style={{ fontSize: "1.1rem", color: "#603311", fontFamily: "Tinos" }}>
-                          I volontari della nostra associazione sono persone che hanno scelto di dedicare il loro tempo all’ascolto e al supporto emotivo di chi ne ha bisogno. Non sono psicologi né terapeuti, ma persone formate per offrire un confronto empatico, senza giudizio e in totale riservatezza.
+                          I volontari della nostra associazione sono persone che hanno scelto di dedicare il loro tempo all'ascolto e al supporto emotivo di chi ne ha bisogno. Non sono psicologi né terapeuti, ma persone formate per offrire un confronto empatico, senza giudizio e in totale riservatezza.
                           <br /><br />
                           Ogni volontario condivide i valori di accoglienza, rispetto e ascolto attivo, creando un ambiente sicuro dove chiunque può esprimersi liberamente. Il nostro obiettivo è offrire uno spazio in cui sentirsi compresi, anche nei momenti più difficili.
                         </Card.Text>
@@ -338,7 +423,7 @@ const Dashboard = () => {
 
                     <Row>
                       <Col md={4} className="mb-4 text-center">
-                        <FaEnvelopeOpenText size={48} color="#603311" style={{ marginBottom: "10px" }} /> {/* Icona SVG */}
+                        <FaEnvelopeOpenText size={48} color="#603311" style={{ marginBottom: "10px" }} />
                         <h5 style={{ fontSize: "1.5rem", fontWeight: "bold", fontFamily: "Tinos", color: "#603311" }}>Invia la tua richiesta</h5>
                         <p style={{ fontSize: "1rem", color: "#603311", fontFamily: "Tinos" }}>
                           Raccontaci, con poche parole, il motivo per cui hai bisogno di parlare. Non serve scrivere un lungo messaggio, basta anche solo un accenno su ciò che stai vivendo.
@@ -346,15 +431,15 @@ const Dashboard = () => {
                       </Col>
 
                       <Col md={4} className="mb-4 text-center">
-                        <FaEnvelope size={48} color="#603311" style={{ marginBottom: "10px" }} /> {/* Icona SVG */}
-                        <h5 style={{ fontSize: "1.5rem", fontWeight: "bold", fontFamily: "Tinos", color: "#603311" }}>Riceverai un’email di risposta</h5>
+                        <FaEnvelope size={48} color="#603311" style={{ marginBottom: "10px" }} />
+                        <h5 style={{ fontSize: "1.5rem", fontWeight: "bold", fontFamily: "Tinos", color: "#603311" }}>Riceverai un'email di risposta</h5>
                         <p style={{ fontSize: "1rem", color: "#603311", fontFamily: "Tinos" }}>
                           Un volontario del nostro team leggerà la tua richiesta e ti risponderà nel più breve tempo possibile.
                         </p>
                       </Col>
 
                       <Col md={4} className="mb-4 text-center">
-                        <FaComments size={48} color="#603311" style={{ marginBottom: "10px" }} /> {/* Icona SVG */}
+                        <FaComments size={48} color="#603311" style={{ marginBottom: "10px" }} />
                         <h5 style={{ fontSize: "1.5rem", fontWeight: "bold", fontFamily: "Tinos", color: "#603311" }}>Scegli il modo in cui parlare</h5>
                         <p style={{ fontSize: "1rem", color: "#603311", fontFamily: "Tinos" }}>
                           Potrai concordare con il volontario il modo che preferisci per comunicare: chat, chiamata o videochiamata.
@@ -369,7 +454,11 @@ const Dashboard = () => {
         </div>
 
         <div style={{ paddingTop: "50px", marginTop: "80px" }}>
-          <CardSlider />
+          <CardSlider
+            currentCard={currentCard}
+            setCurrentCard={setCurrentCard}
+            setSelectedVolontario={setSelectedVolontario}
+          />
         </div>
 
         <Container>
@@ -517,28 +606,71 @@ const Dashboard = () => {
         </Row>
       </footer>
 
-      <Modal show={showWelcomeModal} onHide={() => setShowWelcomeModal(false)} centered className="custom-welcome-modal" style={{ animation: "slideIn 0.7s ease-out", }}>
-        <Modal.Header style={{ backgroundColor: "#603311", border: "none", fontFamily: "Tangerine", borderTopLeftRadius: "15px", borderTopRightRadius: "15px" }}>
-          <Modal.Title className="modal-title-custom subtitleFont text-center w-100" style={{ color: "#DEB887", fontSize: "50px", fontWeight: "bold" }}>
+      <Modal
+        show={showWelcomeModal}
+        onHide={() => setShowWelcomeModal(false)}
+        centered
+        style={{
+          animation: "slideIn 0.7s ease-out",
+        }}
+        contentClassName="rounded-4"
+      >
+        <Modal.Header
+          style={{
+            backgroundColor: "#603311",
+            border: "none",
+            fontFamily: "Tangerine",
+            borderTopLeftRadius: "15px",
+            borderTopRightRadius: "15px",
+            padding: "1.5rem"
+          }}
+        >
+          <Modal.Title
+            className="w-100 text-center"
+            style={{
+              color: "#DEB887",
+              fontSize: "50px",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
             <FaHandsHelping className="me-2" style={{ color: "#DEB887", fontSize: "40px" }} />
             Benvenuto su SerenaMente
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="text-center">
+        <Modal.Body
+          className="text-center"
+          style={{
+            padding: "2rem",
+            fontSize: "1.1rem",
+            lineHeight: "1.6",
+          }}
+        >
           <p style={{ fontFamily: "Tinos" }}>
             Questo sito è nato dalla convinzione che ogni emozione meriti uno spazio per essere ascoltata e compresa. Qui, vogliamo offrirti un luogo sicuro, dove poter condividere le tue esperienze, trovare conforto e scoprire che non sei solo.
           </p>
           <p style={{ fontFamily: "Tinos" }}>
-            Crediamo nel potere delle parole gentili, dell’ascolto e della connessione umana. Questo è il nostro modo di prenderci cura di te, con rispetto e senza giudizi.
+            Crediamo nel potere delle parole, dell'ascolto e della connessione umana. Questo è il nostro modo di prenderci cura di te, con rispetto e senza giudizi.
           </p>
           <p style={{ fontFamily: "Tinos" }}>
             Benvenuto in questo spazio, <br />dove le emozioni trovano casa 🏠
           </p>
         </Modal.Body>
-        <Modal.Footer style={{ backgroundColor: "#603311", border: "none", justifyContent: "center", padding: "0.5rem" }}>
+        <Modal.Footer
+          style={{
+            backgroundColor: "#603311",
+            border: "none",
+            justifyContent: "center",
+            padding: "1rem",
+            borderBottomLeftRadius: "15px",
+            borderBottomRightRadius: "15px"
+          }}
+        >
           <Button
             style={{
-              backgroundColor: "#603311",
+              backgroundColor: "transparent",
               border: "none",
               width: "100%",
               fontSize: "2rem",
@@ -556,13 +688,172 @@ const Dashboard = () => {
       </Modal>
 
       {modalType && (
-        <Modal show={true} onHide={handleClose} centered className="custom-modal">
-          <Modal.Header closeButton>
-            <Modal.Title className="modal-title-custom">{modals[modalType].title}</Modal.Title>
+        <Modal
+          show={true}
+          onHide={handleClose}
+          centered
+          style={{
+            fontFamily: "Tinos",
+          }}
+        >
+          <Modal.Header
+            closeButton
+            style={{
+              backgroundColor: "#603311",
+              color: "#DEB887",
+              borderBottom: "2px solid #DEB887",
+            }}
+          >
+            <Modal.Title
+              style={{
+                fontSize: "1.8rem",
+                fontWeight: "bold",
+              }}
+            >
+              {modals[modalType].title}
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body className="modal-body-custom text-center">{modals[modalType].body}</Modal.Body>
+          <Modal.Body
+            style={{
+              backgroundColor: "#DEB887",
+              color: "#603311",
+              fontSize: "1.2rem",
+              textAlign: "center",
+              padding: "2rem",
+            }}
+          >
+            {modals[modalType].body}
+          </Modal.Body>
+          <Modal.Footer
+            style={{
+              backgroundColor: "#603311",
+              borderTop: "2px solid #DEB887",
+              justifyContent: "center",
+            }}
+          >
+            <Button
+              onClick={handleClose}
+              style={{
+                backgroundColor: "#DEB887",
+                color: "#603311",
+                border: "none",
+                padding: "0.5rem 2rem",
+                fontSize: "1.1rem",
+                fontWeight: "bold",
+                borderRadius: "5px",
+              }}
+            >
+              Chiudi
+            </Button>
+          </Modal.Footer>
         </Modal>
       )}
+
+      <Modal
+        show={selectedVolontario !== null}
+        onHide={() => setSelectedVolontario(null)}
+        centered
+        size="lg"
+      >
+        <Modal.Header
+          style={{
+            backgroundColor: "#603311",
+            border: "none",
+            fontFamily: "Tinos",
+            borderTopLeftRadius: "15px",
+            borderTopRightRadius: "15px",
+            padding: "1.5rem",
+            position: "relative"
+          }}
+        >
+          <Modal.Title
+            className="w-100 text-center"
+            style={{
+              color: "#DEB887",
+              fontSize: "2rem",
+              fontWeight: "bold",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            {selectedVolontario?.nome} {selectedVolontario?.cognome}
+          </Modal.Title>
+          <Button
+            variant="link"
+            onClick={() => setSelectedVolontario(null)}
+            style={{
+              position: "absolute",
+              right: "1rem",
+              top: "1rem",
+              color: "#DEB887",
+              fontSize: "1.5rem"
+            }}
+          >
+            <FaTimes />
+          </Button>
+        </Modal.Header>
+        <Modal.Body
+          style={{
+            backgroundColor: "#DEB887",
+            color: "#603311",
+            padding: "2rem",
+            fontFamily: "Tinos"
+          }}
+        >
+          <Row className="align-items-center">
+            <Col md={4} className="text-center mb-4 mb-md-0">
+              <img
+                src={selectedVolontario?.image}
+                alt={selectedVolontario?.nome}
+                className="img-fluid rounded-circle"
+                style={{
+                  width: "200px",
+                  height: "200px",
+                  objectFit: "cover",
+                  border: "4px solid #603311"
+                }}
+              />
+            </Col>
+            <Col md={8}>
+              <div className="mb-4">
+                <h5 style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>Email:</h5>
+                <p>{selectedVolontario?.email}</p>
+              </div>
+              <div>
+                <h5 style={{ fontWeight: "bold", marginBottom: "0.5rem" }}>Messaggio:</h5>
+                <p style={{ fontStyle: "italic" }}>"{selectedVolontario?.messaggio}"</p>
+              </div>
+            </Col>
+          </Row>
+        </Modal.Body>
+        <Modal.Footer
+          style={{
+            backgroundColor: "#603311",
+            border: "none",
+            justifyContent: "center",
+            padding: "1rem",
+            borderBottomLeftRadius: "15px",
+            borderBottomRightRadius: "15px"
+          }}
+        >
+          <Button
+            style={{
+              backgroundColor: "#DEB887",
+              color: "#603311",
+              border: "none",
+              padding: "0.5rem 2rem",
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              borderRadius: "5px",
+              fontFamily: "Tinos"
+            }}
+            onClick={() => setSelectedVolontario(null)}
+          >
+            Chiudi
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

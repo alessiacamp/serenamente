@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RegistratiVolontario.css';
 import { FaUserAlt } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
@@ -12,9 +11,9 @@ const RegistratiVolontario = () => {
     email: '',
     password: ''
   });
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,22 +26,8 @@ const RegistratiVolontario = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess(false);
-
-    // Validazione lato client
-    if (!formData.nome || !formData.cognome || !formData.email || !formData.password) {
-      setError('Tutti i campi sono obbligatori');
-      setLoading(false);
-      return;
-    }
-
-    if (formData.password.length < 8) {
-      setError('La password deve contenere almeno 8 caratteri');
-      setLoading(false);
-      return;
-    }
+    setIsSubmitting(true);
+    setError(null);
 
     try {
       const response = await fetch('http://localhost:8080/volontario', {
@@ -50,114 +35,175 @@ const RegistratiVolontario = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          nome: formData.nome,
-          cognome: formData.cognome,
-          email: formData.email,
-          password: formData.password
-        }),
+        body: JSON.stringify(formData)
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.message || 'Errore durante la registrazione');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Errore durante la registrazione');
       }
 
-      // Registrazione riuscita
-      setSuccess(true);
-      console.log('Registrazione volontario avvenuta con successo:', data);
 
-      // Reindirizza dopo 2 secondi per mostrare il messaggio di successo
+
+      setRegistrationSuccess(true);
+
       setTimeout(() => {
-        navigate('/login', { state: { registrationSuccess: true } });
+        navigate('/login');
       }, 2000);
 
     } catch (err) {
+      console.error('Errore:', err);
       setError(err.message || 'Si è verificato un errore durante la registrazione');
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="registrazione text-align-center" style={{ backgroundColor: "white" }}>
-      <form onSubmit={handleSubmit} style={{ textAlign: 'center', backgroundColor: "#DEB887", fontFamily: "Tinos" }}>
-        <h2 style={{ color: '#603311', fontWeight: "bold" }}>Registrati come Volontario</h2>
+    <div className="d-flex justify-content-center align-items-center min-vh-100 bg-white">
+      <form
+        className="p-4 rounded"
+        style={{
+          backgroundColor: "#DEB887",
+          maxWidth: '500px',
+          width: '100%',
+          textAlign: 'center',
+          fontFamily: "Tinos",
+          color: '#603311'
+        }}
+        onSubmit={handleSubmit}
+      >
+        <h2 style={{
+          color: '#603311',
+          fontWeight: "bold",
+          marginBottom: '1.5rem'
+        }}>
+          Registrati come Utente
+        </h2>
+
+        {error && (
+          <div className="alert alert-danger" role="alert">
+            {error}
+          </div>
+        )}
+
+
+
         <img
           src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdyUSIyK9p6BATvVhdZc4sxw5MbzUxNEv70g&s"
-          className="d-inline w-70 h-70 rounded-circle"
-          alt="Profilo volontario"
+          className="d-inline-block rounded-circle mb-4"
+          style={{
+            width: '200px',
+            height: '200px',
+            objectFit: 'cover'
+          }}
+          alt="Profilo"
         />
 
-        {error && <div className="alert alert-danger" style={{ color: 'red' }}>{error}</div>}
-        {success && <div className="alert alert-success" style={{ color: 'green' }}>Registrazione completata con successo!</div>}
-
-        <div className='input-box'>
+        <div className='position-relative mb-3'>
           <input
             type="text"
             name="nome"
             placeholder='Nome'
+            required
+            className="w-100 ps-5 py-2"
+            style={{
+              color: '#603311',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderBottom: '1px solid #603311',
+              outline: 'none',
+              fontFamily: 'Tinos'
+            }}
             value={formData.nome}
             onChange={handleChange}
-            required
-            style={{ color: '#603311' }}
+            disabled={registrationSuccess}
           />
-          <FaUserAlt className='icona' style={{ color: '#603311' }} />
+          <FaUserAlt className='position-absolute start-0 top-50 translate-middle-y ms-3' style={{ color: '#603311' }} />
         </div>
 
-        <div className='input-box'>
+        <div className='position-relative mb-3'>
           <input
             type="text"
             name="cognome"
             placeholder='Cognome'
+            required
+            className="w-100 ps-5 py-2"
+            style={{
+              color: '#603311',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderBottom: '1px solid #603311',
+              outline: 'none',
+              fontFamily: 'Tinos'
+            }}
             value={formData.cognome}
             onChange={handleChange}
-            required
-            style={{ color: '#603311' }}
+            disabled={registrationSuccess}
           />
-          <FaUserAlt className='icona' style={{ color: '#603311' }} />
+          <FaUserAlt className='position-absolute start-0 top-50 translate-middle-y ms-3' style={{ color: '#603311' }} />
         </div>
 
-        <div className='input-box'>
+        <div className='position-relative mb-3'>
           <input
             type="email"
             name="email"
             placeholder='Email'
+            required
+            className="w-100 ps-5 py-2"
+            style={{
+              color: '#603311',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderBottom: '1px solid #603311',
+              outline: 'none',
+              fontFamily: 'Tinos'
+            }}
             value={formData.email}
             onChange={handleChange}
-            required
-            style={{ color: '#603311' }}
+            disabled={registrationSuccess}
           />
-          <MdOutlineEmail className='icona' style={{ color: '#603311' }} />
+          <MdOutlineEmail className='position-absolute start-0 top-50 translate-middle-y ms-3' style={{ color: '#603311' }} />
         </div>
 
-        <div className='input-box'>
+        <div className='position-relative mb-4'>
           <input
             type="password"
             name="password"
             placeholder='Password'
+            required
+            className="w-100 ps-5 py-2"
+            style={{
+              color: '#603311',
+              backgroundColor: 'transparent',
+              border: 'none',
+              borderBottom: '1px solid #603311',
+              outline: 'none',
+              fontFamily: 'Tinos'
+            }}
             value={formData.password}
             onChange={handleChange}
-            required
-            minLength="8"
-            style={{ color: '#603311' }}
+            disabled={registrationSuccess}
           />
-          <TbLockPassword className='icona' style={{ color: '#603311' }} />
+          <TbLockPassword className='position-absolute start-0 top-50 translate-middle-y ms-3' style={{ color: '#603311' }} />
         </div>
 
         <button
           type='submit'
+          className="w-100 py-2 text-decoration-none"
           style={{
             color: '#603311',
-            background: 'none',
+            backgroundColor: 'transparent',
             border: 'none',
-            cursor: 'pointer',
-            opacity: loading ? 0.7 : 1
+            cursor: registrationSuccess ? 'default' : 'pointer',
+            fontWeight: 'bold',
+            fontFamily: 'Tinos',
+            fontSize: '1rem'
           }}
-          disabled={loading || success}
+          disabled={isSubmitting || registrationSuccess}
         >
-          {loading ? 'Registrazione in corso...' : success ? 'Registrato!' : 'Registrati'}
+          {registrationSuccess ? 'La registrazione è avvenuta con successo!' :
+            (isSubmitting ? 'Registrazione in corso...' : 'Registrati')}
         </button>
       </form>
     </div>

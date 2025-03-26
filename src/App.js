@@ -14,8 +14,6 @@ function App() {
         <Route path="/registrati-volontario" element={<RegistratiVolontario />} />
         <Route path="/home" element={<Dashboard />} />
         <Route path="/modifica-profilo" element={<ModificaProfilo />} />
-
-        <Route path="/" element={<Dashboard />} />
       </Routes>
     </BrowserRouter>
   );
