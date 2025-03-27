@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Dropdown, Container, Nav, Navbar, Row, Col, Card, Button, Modal } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Dropdown, Container, Nav, Navbar, Row, Col, Card, Button, Modal, Spinner } from "react-bootstrap";
 import { FaArrowLeft, FaArrowRight, FaInstagram, FaFacebook, FaTwitter, FaYoutube, FaHandsHelping, FaEnvelopeOpenText, FaEnvelope, FaComments, FaTimes } from "react-icons/fa";
 import "./Dashboard.css";
 import immagineBullismo from "./images/bullismo.jpg";
@@ -9,6 +9,7 @@ import immagineDisturbiAlimentari from "./images/eatingDisorder.png";
 import immagineSaluteMentale from "./images/salute-mentale.jpg";
 import immagineViolenzaCoppia from "./images/violenza.jpg";
 import selfCare from "./images/abbraccio.jpg";
+
 
 const modals = {
   telefonoAmico: { title: "Telefono Amico", body: "Numero di telefono : 02 2327 2327" },
@@ -63,57 +64,6 @@ const articlesData = [
   },
 ];
 
-const volontariData = [
-  {
-    id: 1,
-    image: "",
-    nome: "Dante",
-    cognome: "Rossi",
-    email: "dante.rossi@example.com",
-    messaggio: "Credo che ascoltare sia il primo passo per aiutare qualcuno. Sono qui per offrirti uno spazio sicuro dove poterti esprimere liberamente."
-  },
-  {
-    id: 2,
-    image: "",
-    nome: "Francesco",
-    cognome: "Bianchi",
-    email: "francesco.bianchi@example.com",
-    messaggio: "Ho scelto di diventare volontario perché so quanto possa essere difficile affrontare certe situazioni da soli. Parlarne è già un primo passo importante."
-  },
-  {
-    id: 3,
-    image: "",
-    nome: "Gianmarco",
-    cognome: "Verdi",
-    email: "gianmarco.verdi@example.com",
-    messaggio: "La mia esperienza personale mi ha insegnato che a volte basta una persona che ti ascolti davvero per fare la differenza."
-  },
-  {
-    id: 4,
-    image: "",
-    nome: "Mirko",
-    cognome: "Neri",
-    email: "mirko.neri@example.com",
-    messaggio: "Non esistono problemi troppo piccoli o troppo grandi per essere condivisi. Sono qui per ascoltarti senza giudizio."
-  },
-  {
-    id: 5,
-    image: "",
-    nome: "Simone",
-    cognome: "Gialli",
-    email: "simone.gialli@example.com",
-    messaggio: "La mia missione è aiutare le persone a trovare la forza dentro di sé per superare le difficoltà."
-  },
-  {
-    id: 6,
-    image: "",
-    nome: "Stefano",
-    cognome: "Blu",
-    email: "stefano.blu@example.com",
-    messaggio: "Credo che ogni persona abbia il diritto di essere ascoltata e compresa. Offro il mio tempo per darti questo spazio."
-  },
-];
-
 const Dashboard = () => {
   const [modalType, setModalType] = useState(null);
   const [clickedCards, setClickedCards] = useState([]);
@@ -121,6 +71,33 @@ const Dashboard = () => {
   const [navbarColor] = useState("#603311");
   const [selectedVolontario, setSelectedVolontario] = useState(null);
   const [currentCard, setCurrentCard] = useState(0);
+  const [volontariData, setVolontariData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchVolontari = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/volontario');
+        if (!response.ok) {
+          throw new Error('Errore nel recupero dei volontari');
+        }
+        const data = await response.json();
+        // Filtra solo i volontari con messaggio non nullo e nasconde la password
+        const filteredVolontari = data.content
+          .filter(volontario => volontario.messaggio)
+          .map(({ password, ...rest }) => rest);
+        setVolontariData(filteredVolontari);
+      } catch (err) {
+        console.error('Errore:', err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVolontari();
+  }, []);
 
   const handleShow = (type) => setModalType(type);
   const handleClose = () => setModalType(null);
@@ -154,6 +131,58 @@ const Dashboard = () => {
       setSelectedVolontario(volontariData[currentCard]);
     };
 
+    if (loading) {
+      return (
+        <Container id="scopri-volontari-section">
+          <Row className="justify-content-center">
+            <Col xs={12} className="text-center">
+              <h3 style={{ fontFamily: "Tinos", marginBottom: "70px", fontWeight: "bold", fontSize: "40px", color: "#603311" }}>
+                Scopri i nostri volontari
+              </h3>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <Spinner animation="border" variant="primary" />
+          </Row>
+        </Container>
+      );
+    }
+
+    if (error) {
+      return (
+        <Container id="scopri-volontari-section">
+          <Row className="justify-content-center">
+            <Col xs={12} className="text-center">
+              <h3 style={{ fontFamily: "Tinos", marginBottom: "70px", fontWeight: "bold", fontSize: "40px", color: "#603311" }}>
+                Scopri i nostri volontari
+              </h3>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <div className="alert alert-danger">{error}</div>
+          </Row>
+        </Container>
+      );
+    }
+
+    if (volontariData.length === 0) {
+      return (
+        <Container id="scopri-volontari-section">
+          <Row className="justify-content-center">
+            <Col xs={12} className="text-center">
+              <h3 style={{ fontFamily: "Tinos", marginBottom: "70px", fontWeight: "bold", fontSize: "40px", color: "#603311" }}>
+                Scopri i nostri volontari
+              </h3>
+            </Col>
+          </Row>
+          <Row className="justify-content-center">
+            <div className="alert alert-info">
+              Nessun volontario disponibile al momento</div>
+          </Row>
+        </Container>
+      );
+    }
+
     return (
       <Container id="scopri-volontari-section">
         <Row className="justify-content-center">
@@ -180,7 +209,7 @@ const Dashboard = () => {
                       style={{ padding: 0, border: 'none', background: 'none' }}
                     >
                       <img
-                        src={volontariData[currentCard].image}
+                        src={`data:image/jpeg;base64,${volontariData[currentCard].foto}` || "https://via.placeholder.com/250"}
                         alt=""
                         className="img-fluid rounded-circle card-image"
                         style={{
@@ -194,7 +223,7 @@ const Dashboard = () => {
                       />
                     </Button>
                     <h5 style={{ fontSize: "1.5rem", marginTop: "25px", color: "#603311" }}>
-                      {volontariData[currentCard].nome}
+                      {volontariData[currentCard].nome} {volontariData[currentCard].cognome}
                     </h5>
                   </div>
                 </Col>
@@ -804,7 +833,7 @@ const Dashboard = () => {
           <Row className="align-items-center">
             <Col md={4} className="text-center mb-4 mb-md-0">
               <img
-                src={selectedVolontario?.image}
+                src={`data:image/jpeg;base64,${selectedVolontario?.foto}` || "https://via.placeholder.com/250"}
                 alt={selectedVolontario?.nome}
                 className="img-fluid rounded-circle"
                 style={{

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaUserAlt } from "react-icons/fa";
+import { FaUserAlt, FaCamera } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 
@@ -9,8 +9,10 @@ const RegistratiUtente = () => {
     nome: '',
     cognome: '',
     email: '',
-    password: ''
+    password: '',
+    foto: null
   });
+  const [previewImage, setPreviewImage] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [registrationSuccess, setRegistrationSuccess] = useState(false);
@@ -24,26 +26,65 @@ const RegistratiUtente = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Crea un'anteprima dell'immagine
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviewImage(reader.result);
+      };
+      reader.readAsDataURL(file);
+
+      // Salva il file nello state
+      setFormData(prev => ({
+        ...prev,
+        foto: file
+      }));
+    }
+  };
+
+  const convertImageToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(',')[1]); // Rimuove il prefisso data:image/...
+      reader.onerror = error => reject(error);
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setError(null);
 
     try {
+      // Converti l'immagine in base64 se presente
+      const fotoBase64 = formData.foto ? await convertImageToBase64(formData.foto) : null;
+
+      // Prepara il payload JSON
+      const payload = {
+        nome: formData.nome,
+        cognome: formData.cognome,
+        email: formData.email,
+        password: formData.password,
+        foto: fotoBase64,
+        messaggio: "", // Campo richiesto dal DTO
+        ruolo: "USER" // Valore di default
+      };
+
       const response = await fetch('http://localhost:8080/utente', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(payload)
       });
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Errore durante la registrazione');
       }
-
-
 
       setRegistrationSuccess(true);
 
@@ -87,18 +128,67 @@ const RegistratiUtente = () => {
           </div>
         )}
 
-
-
-        <img
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdyUSIyK9p6BATvVhdZc4sxw5MbzUxNEv70g&s"
-          className="d-inline-block rounded-circle mb-4"
-          style={{
-            width: '200px',
-            height: '200px',
-            objectFit: 'cover'
-          }}
-          alt="Profilo"
-        />
+        <div className="position-relative mb-4">
+          <div style={{ position: 'relative', display: 'inline-block' }}>
+            {previewImage ? (
+              <img
+                src={previewImage}
+                className="d-inline-block rounded-circle mb-2"
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  objectFit: 'cover',
+                  cursor: 'pointer',
+                  border: '2px solid #603311'
+                }}
+                alt="Anteprima profilo"
+              />
+            ) : (
+              <div
+                className="d-inline-block rounded-circle mb-2 d-flex align-items-center justify-content-center"
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  backgroundColor: '#f8f9fa',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  border: '2px solid #603311'
+                }}
+              >
+                <span style={{ color: '#603311', fontSize: '3rem' }}>
+                  <FaUserAlt />
+                </span>
+              </div>
+            )}
+            <label
+              htmlFor="foto-upload"
+              style={{
+                position: 'absolute',
+                bottom: '10px',
+                right: '10px',
+                backgroundColor: '#603311',
+                color: '#DEB887',
+                borderRadius: '50%',
+                width: '40px',
+                height: '40px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer'
+              }}
+            >
+              <FaCamera />
+              <input
+                id="foto-upload"
+                type="file"
+                accept="image/*"
+                style={{ display: 'none' }}
+                onChange={handleImageChange}
+                disabled={registrationSuccess}
+              />
+            </label>
+          </div>
+        </div>
 
         <div className='position-relative mb-3'>
           <input
@@ -194,15 +284,29 @@ const RegistratiUtente = () => {
           style={{
             color: '#603311',
             backgroundColor: 'transparent',
-            border: 'none',
+            border: '2px solid #603311',
+            borderRadius: '5px',
             cursor: registrationSuccess ? 'default' : 'pointer',
             fontWeight: 'bold',
             fontFamily: 'Tinos',
-            fontSize: '1rem'
+            fontSize: '1rem',
+            transition: 'all 0.3s ease'
           }}
           disabled={isSubmitting || registrationSuccess}
+          onMouseOver={(e) => {
+            if (!registrationSuccess && !isSubmitting) {
+              e.target.style.backgroundColor = '#603311';
+              e.target.style.color = '#DEB887';
+            }
+          }}
+          onMouseOut={(e) => {
+            if (!registrationSuccess && !isSubmitting) {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.color = '#603311';
+            }
+          }}
         >
-          {registrationSuccess ? 'La registrazione è avvenuta con successo!' :
+          {registrationSuccess ? 'Registrazione completata!' :
             (isSubmitting ? 'Registrazione in corso...' : 'Registrati')}
         </button>
       </form>

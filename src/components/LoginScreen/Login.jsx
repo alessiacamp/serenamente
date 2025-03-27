@@ -36,7 +36,10 @@ const Login = () => {
       }
 
       localStorage.setItem('accessToken', data.accessToken);
+      localStorage.setItem('email', email);
+
       navigate('/home');
+
 
     } catch (err) {
       setError(err.message || 'Si è verificato un errore durante il login');
