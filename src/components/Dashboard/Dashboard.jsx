@@ -83,7 +83,6 @@ const Dashboard = () => {
           throw new Error('Errore nel recupero dei volontari');
         }
         const data = await response.json();
-        // Filtra solo i volontari con messaggio non nullo e nasconde la password
         const filteredVolontari = data.content
           .filter(volontario => volontario.messaggio)
           .map(({ password, ...rest }) => rest);
@@ -789,8 +788,6 @@ const Dashboard = () => {
             backgroundColor: "#603311",
             border: "none",
             fontFamily: "Tinos",
-            borderTopLeftRadius: "15px",
-            borderTopRightRadius: "15px",
             padding: "1.5rem",
             position: "relative"
           }}
@@ -862,8 +859,6 @@ const Dashboard = () => {
             border: "none",
             justifyContent: "center",
             padding: "1rem",
-            borderBottomLeftRadius: "15px",
-            borderBottomRightRadius: "15px"
           }}
         >
           <Button

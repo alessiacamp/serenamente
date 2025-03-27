@@ -30,14 +30,12 @@ const RegistratiVolontario = () => {
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      // Crea un'anteprima dell'immagine
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewImage(reader.result);
       };
       reader.readAsDataURL(file);
 
-      // Salva il file nello state
       setFormData(prev => ({
         ...prev,
         foto: file
@@ -49,7 +47,7 @@ const RegistratiVolontario = () => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.split(',')[1]); // Rimuove il prefisso data:image/...
+      reader.onload = () => resolve(reader.result.split(',')[1]);
       reader.onerror = error => reject(error);
     });
   };
@@ -60,10 +58,8 @@ const RegistratiVolontario = () => {
     setError(null);
 
     try {
-      // Converti l'immagine in base64 se presente
       const fotoBase64 = formData.foto ? await convertImageToBase64(formData.foto) : null;
 
-      // Prepara il payload JSON
       const payload = {
         nome: formData.nome,
         cognome: formData.cognome,
@@ -71,7 +67,7 @@ const RegistratiVolontario = () => {
         password: formData.password,
         messaggio: formData.messaggio,
         foto: fotoBase64,
-        ruolo: "VOLUNTEER" // Valore di default per i volontari
+        ruolo: "VOLUNTEER"
       };
 
       const response = await fetch('http://localhost:8080/volontario', {
@@ -299,7 +295,7 @@ const RegistratiVolontario = () => {
             onChange={handleChange}
             disabled={registrationSuccess}
           />
-          <FaRegEdit className='position-absolute start-0 top-20 translate-middle-y ms-3' style={{ color: '#603311' }} />
+          <FaRegEdit className='position-absolute start-0 top-3 ms-3  mt-2' style={{ color: '#603311' }} />
         </div>
 
         <button

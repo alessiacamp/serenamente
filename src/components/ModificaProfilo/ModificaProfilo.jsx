@@ -91,7 +91,6 @@ const ModificaProfilo = () => {
       };
       reader.readAsDataURL(file);
 
-      // Converti il file in base64 per l'invio
       const fileReader = new FileReader();
       fileReader.onloadend = () => {
         const base64String = fileReader.result.split(',')[1];
@@ -115,7 +114,6 @@ const ModificaProfilo = () => {
         throw new Error('Utente non autenticato');
       }
 
-      // Prepara il payload secondo NewUtenteDTO
       const payload = {
         nome: formData.nome,
         cognome: formData.cognome,
@@ -181,7 +179,7 @@ const ModificaProfilo = () => {
           fontWeight: "bold",
           marginBottom: '1.5rem'
         }}>
-          Modifica Profilo {isVolontario && '(Volontario)'}
+          Modifica Profilo {isVolontario}
         </h2>
 
         {error && (
@@ -282,7 +280,7 @@ const ModificaProfilo = () => {
 
 
         {isVolontario && (
-          <div className='position-relative mb-3'>
+          <div className='position-relative mb-3 '>
             <textarea
               name="messaggio"
               placeholder='Il tuo messaggio come volontario'
@@ -300,7 +298,7 @@ const ModificaProfilo = () => {
               value={formData.messaggio}
               onChange={handleChange}
             />
-            <FaRegEdit className='position-absolute start-0 top-20 translate-middle-y ms-3' style={{ color: '#603311' }} />
+            <FaRegEdit className='position-absolute start-0 top-20 translate-middle-y ms-3 mt-3' style={{ color: '#603311' }} />
           </div>
         )}
 
