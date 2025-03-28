@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Dropdown, Container, Nav, Navbar, Row, Col, Card, Button, Modal, Spinner } from "react-bootstrap";
-import { FaArrowLeft, FaArrowRight, FaInstagram, FaFacebook, FaTwitter, FaYoutube, FaHandsHelping, FaEnvelopeOpenText, FaEnvelope, FaComments, FaTimes } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaInstagram, FaFacebook, FaYoutube, FaHandsHelping, FaEnvelopeOpenText, FaEnvelope, FaComments, FaTimes } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 import "./Dashboard.css";
 import immagineBullismo from "./images/bullismo.jpg";
 import immagineDepressione from "./images/depression.jpeg";
@@ -621,14 +623,14 @@ const Dashboard = () => {
                 <FaFacebook size={24} />
               </a>
               <a href="https://twitter.com" className="text-decoration-none" style={{ color: "#DEB887" }}>
-                <FaTwitter size={24} />
+                <FaXTwitter size={24} />
               </a>
               <a href="https://youtube.com" className="text-decoration-none" style={{ color: "#DEB887" }}>
                 <FaYoutube size={24} />
               </a>
             </div>
             <div className="mt-2" style={{ color: "#DEB887", fontFamily: "Tinos" }}>
-              © 2023 SerenaMente. Tutti i diritti riservati.
+              © 2025 SerenaMente. Tutti i diritti riservati.
             </div>
           </div>
         </Row>
